@@ -14,8 +14,7 @@ Start app.py from command prompt or shell. Navigate to `http://localhost:5000` a
 
 ## Note
 
-The repo contains a set of sample documents as start up material. All the content in all of those sample documents are sourced from internet, primarily wikipedia and in some cases other sources.
-
+This repository includes a set of sample documents provided as startup material for demonstration and testing. The contents of these documents are sourced from publicly available materials on the internet—primarily Wikipedia, along with selected content from other open sources. These samples are not intended for redistribution and are included solely to illustrate the functionality of the application.
 
 ## Installation
 
