@@ -12,6 +12,10 @@ A minimalist Flask-based web app for structured document review, live topic brow
 
 Start app.py from command prompt or shell. Navigate to `http://localhost:5000` and explore documents by topic, search query, or direct edit. All changes will be go through an additional check and will be automatically indexed. Add new topic and it will be saved as a json file under the first tag name.
 
+## Note
+
+The repo contains a set of sample documents as start up material. All the content in all of those sample documents are sourced from internet, primarily wikipedia and in some cases other sources.
+
 
 ## Installation
 
