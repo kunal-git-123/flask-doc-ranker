@@ -1,0 +1,18 @@
+{
+    "title": "ReLU: The Rectified Linear Activation Function",
+    "summary": "A widely used activation function in neural networks due to its simplicity and efficiency.",
+    "content": "ReLU (Rectified Linear Unit) activation function is defined as max(0, x), which helps neural networks learn complex patterns...",
+    "tags": ["ReLU", "Neural Networks", "Deep Learning"],
+    "last_updated": "2025-05-03",
+    "author": "Kunal",
+    "resources": [
+        {
+            "name": "ReLU in Neural Networks",
+            "url": "https://machinelearningmastery.com/rectified-linear-activation-function-for-deep-learning-neural-networks/"
+        },
+        {
+            "name": "Comparing Activation Functions",
+            "url": "https://towardsdatascience.com/activation-functions-neural-networks-1a5033ab40bf"
+        }
+    ]
+}

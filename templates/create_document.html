@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add a New Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #4A90E2, #99ccff);
+            color: white;
+            padding: 20px;
+	    max-width: 1000px;
+	    min-width:400px;
+            margin: auto;
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            opacity: 0; /* Initially hidden */
+            transform: translateY(20px); /* Slightly shifted down */
+            transition: all 0.4s ease-in-out; /* Smooth animation */
+        }
+        input, textarea {
+            padding: 8px;
+            width: 100%;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            width: 250px; /* Reduces width for a more compact look */
+    	    display: block; /* Ensures proper centering */
+            margin: 15px auto; /* Centers horizontally */
+            background-color: #FFDD44;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+	    transition: 0.3s ease-in-out;
+        }
+        button:hover {
+            background-color: #FFC107;
+	    transform: scale(1.05); /* Slight increase on hover */
+        }
+        .logo-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .logo-container img {
+            width: 120px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Add a New Document</h1>
+
+    <form id="addDocumentForm">
+        <input type="text" id="docTitle" placeholder="Title" required>
+        <input type="text" id="docSummary" placeholder="Summary" required>
+        <textarea id="docContent" placeholder="Content" required></textarea>
+        <input type="text" id="docTags" placeholder="Tags (comma-separated)">
+        <input type="text" id="docResources" placeholder="Resource Links (url1;name1,url2;name2,...)">
+        <button type="submit">Submit</button>
+    </form>
+
+    <div class="logo-container">
+        <a href="/">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Back to Search">
+        </a>
+    </div>
+
+	<script>
+		$(document).ready(function() {
+    			$("form").css("opacity", "1").css("transform", "translateY(0)");
+	 		
+		$("#addDocumentForm").submit(function(event) {
+		    event.preventDefault(); // Prevent page reload
+		    
+		    let docData = {
+		        title: $("#docTitle").val(),
+		        summary: $("#docSummary").val(),
+		        content: $("#docContent").val(),
+		        tags: $("#docTags").val().split(","), 
+		        resources: $("#docResources").val().split(",")
+		    };
+
+		    $.ajax({
+		        type: "POST",
+		        url: "/add_document",
+		        contentType: "application/json",
+		        data: JSON.stringify(docData),
+		        success: function(response) {
+		            alert("Document added successfully! Redirecting to Home Page.");
+			    window.location.href = "/"; // Redirect to the search page
+		        },
+		        error: function() {
+		            alert("Error adding document.");
+		        }
+		    });
+		});
+    });
+
+		$("textarea").on("focus", function() {
+	    		$(this).css("height", "200px"); // Expand height when focused
+		});
+
+		$("textarea").on("blur", function() {
+	    		if ($(this).val().trim() === "") {
+			$(this).css("height", "100px"); // Reset height if empty
+	    	}
+		});
+</script>
+
+
+		
+
+
+ </script>
+</body>
+</html>

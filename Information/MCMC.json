@@ -1,0 +1,21 @@
+{
+    "title": "Markov Chain Monte Carlo: A Probabilistic Sampling Method",
+    "summary": "An approach to approximating distributions using stochastic sampling techniques.",
+    "content": "Markov Chain Monte Carlo (MCMC) methods are used to generate samples from complex probability distributions...",
+    "tags": [
+        "MCMC",
+        " Bayesian Inference",
+        " Probabilistic Programming"
+    ],
+    "resources": [
+        {
+            "name": "MCMC Introduction",
+            "url": "https://www.statisticshowto.com/markov-chain-monte-carlo/"
+        },
+        {
+            "name": "Bayesian Methods and MCMC",
+            "url": "https://mc-stan.org/docs/"
+        }
+    ],
+    "last_updated": "2025-05-19"
+}

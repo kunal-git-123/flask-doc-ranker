@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Review Edited Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to bottom, #ffffff, #99ccff);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            background: white;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px #aaa;
+        }
+
+        .document {
+            width: 48%;
+            padding: 10px;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+
+        h3 {
+            text-align: center;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 10px;
+            font-size: 16px;
+            line-height: 1.5;
+            resize: vertical;
+            border: 2px solid #333;
+            border-radius: 5px;
+        }
+
+        .approve-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .reject-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Review Edited Document</h2>
+
+    <div class="container">
+        <div class="document">
+            <h3>Original Version</h3>
+            <p><strong>Title:</strong> {{ original.title }}</p>
+            <p><strong>Summary:</strong> {{ original.summary }}</p>
+            <p><strong>Content:</strong></p>
+            <textarea readonly>{{ original.content }}</textarea>
+	    <p><strong>Tags:</strong>{{original.tags}}</p>
+	    <p><strong>Resources:</strong></p>
+            <textarea readonly>{{ original.resources }}</textarea>
+	    
+        </div>
+
+        <div class="document">
+            <h3>Edited Version</h3>
+            <label><strong>Title:</strong></label>
+            <input type="text" id="docTitle" value="{{ edited.title }}" />
+
+            <label><strong>Summary:</strong></label>
+            <textarea id="docSummary">{{ edited.summary }}</textarea>
+
+            <label><strong>Content:</strong></label>
+            <textarea id="docContent">{{ edited.content }}</textarea>
+		
+	    <label><strong>Tags:</strong></label>
+            <textarea id="docTags">{{ edited.tags }}</textarea>
+
+	    <label><strong>Resources::</strong></label>
+            <textarea id="docResources">{{ edited.resources }}</textarea>		
+        </div>
+    </div>
+
+    <button class="approve-btn" onclick="approveEdit('{{ edited.name }}')">✅ Approve Edit</button>
+    <button class="reject-btn" onclick="rejectEdit('{{ edited.name }}')">❌ Reject Edit</button>
+
+    <script>
+	function highlightChanges(originalText, editedText) {    		
+		let originalSentences = originalText.split(/([.?!])\s+/g);
+    		let editedSentences = editedText.split(/([.?!])\s+/g);
+    		
+		let highlightedText = editedSentences.map((sentence, index) => {
+        		if (!originalSentences[index]) {
+            			console.log("New sentence detected:", sentence);
+            			return `<span style="background-color: yellow;">${sentence}</span>`; // New sentence
+        		} else if (sentence !== originalSentences[index]) {
+            			console.log("Modified sentence detected:", sentence);
+            			return `<span style="background-color: red;">${sentence}</span>`; // Modified sentence
+        	}
+        	return sentence; // No change
+    		}).join(" ");
+		console.log("Final Highlighted Content for Section:", highlightedText); // ✅ Now this log makes sense
+    		return highlightedText;  // ✅ Return the stored result instead of inline mapping
+
+	}
+
+	$(document).ready(function() {
+    		let original = {
+        		content: `{{ original.content | tojson }}`,
+        		summary: `{{ original.summary | tojson }}`,
+        		tags: `{{ original.tags | tojson }}`,
+        		resources: `{{ original.resources | tojson }}`
+    		};
+
+    	let edited = {
+        	content: `{{ edited.content | tojson }}`,
+        	summary: `{{ edited.summary | tojson }}`,
+        	tags: `{{ edited.tags | tojson }}`,
+        	resources: `{{ edited.resources | tojson }}`
+    	};
+	
+
+    	// Convert JSON strings back to proper arrays
+    	Object.keys(original).forEach(section => {
+		console.log(`Attempting to process section: ${section}`); // Debugging log
+		
+		// Retrieve text from HTML and clean it
+    		let rawOriginal = original[section].trim();
+    		let rawEdited = edited[section].trim();
+		
+		// Remove accidental outer quotes
+    		if (rawOriginal.startsWith('"') && rawOriginal.endsWith('"')) {
+        		rawOriginal = rawOriginal.slice(1, -1);
+    		}
+    		if (rawEdited.startsWith('"') && rawEdited.endsWith('"')) {
+        		rawEdited = rawEdited.slice(1, -1);
+    		}		
+		
+        	try {
+        		original[section] = rawOriginal;
+        		edited[section] = rawEdited;
+    		} catch (error) {
+        		console.error(`Error parsing JSON for section ${section}:`, error.message);
+        		return;  // Skip processing if parsing fails
+    		}
+
+        	// Apply highlighting function
+        	let highlightedText = highlightChanges(original[section], edited[section]);
+
+        	// Update the respective fields in the review page
+        	$(`#${section}`).html(highlightedText);
+    		});
+	});
+
+
+        function approveEdit(docId) {
+            alert(docId)
+            let updatedData = {
+                title: $("#docTitle").val(),
+                summary: $("#docSummary").val(),
+                content: $("#docContent").val(),
+		tags: $("#docTags").val().split(','),
+		resources: $("#docResources").val()
+            };
+	    alert(docId)
+            $.post(`/approve_edit/${docId}`, JSON.stringify(updatedData), function(response) {
+                alert(response.message);
+                window.location.href = "/pending_documents";
+            }).fail(function() {
+                alert("Error approving edited document.");
+            });
+        }
+
+        function rejectEdit(docId) {
+	    alert(docId)
+            $.post(`/reject_edit/${docId}`, function(response) {
+                alert(response.message);
+                window.location.href = "/pending_documents";
+            }).fail(function() {
+                alert("Error rejecting edit.");
+            });
+        }
+    </script>
+
+</body>
+</html>

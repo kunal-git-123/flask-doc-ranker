@@ -1,0 +1,21 @@
+{
+    "title": "Betelgeuse: A Star on the Brink",
+    "summary": "A look at the lifecycle and behavior of Betelgeuse, a red supergiant.",
+    "content": "Betelgeuse, one of the most studied red supergiants, is known for its unpredictable dimming events.\nLocated in the constellation of Orion, Betelgeuse began to dim noticeably, starting in October 2019.\nIts brightness had dropped by a factor of approximately 3, by mid-February 2020.\nIt then returned to a more normal brightness range, in April 2023.\nThe dimming was attributed to a dust cloud formed by a massive ejection of material from the surface of the star, which blocked the radiation and hence caused the dimming.",
+    "tags": [
+        "Betelgeuse",
+        "Astrophysics",
+        "Stellar Evolution"
+    ],
+    "resources": [
+        {
+            "name": "Latest Observations of Betelgeuse",
+            "url": "https://www.nasa.gov/feature/goddard/betelgeuse-dimming"
+        },
+        {
+            "name": "Brightest Stars in Sky",
+            "url": "https://en.wikipedia.org/wiki/List_of_brightest_stars"
+        }
+    ],
+    "last_updated": "2025-05-19"
+}

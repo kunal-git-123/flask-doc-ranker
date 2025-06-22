@@ -1,0 +1,26 @@
+{
+    "title": "Introduction to Flask",
+    "summary": "An overview of Flask as a microframework for web development.",
+    "content": "Flask is a lightweight framework for Python that provides developers with flexibility and simplicity. It is a lightweight WSGI web application framework and is designed to make getting started quick and easy, with the ability to scale up to complex applications.",
+    "tags": [
+        "Flask",
+        "Web Development",
+        "Python",
+        " Django"
+    ],
+    "last_updated": "2025-05-19",
+    "resources": [
+	{
+        	"url":"https://flask.palletsprojects.com",
+		"name":"Flask Official Documentation"
+	},
+	{
+        	"url": "https://realpython.com/tutorials/flask/",
+		"name":"Beginners Guide to Flask"
+	},
+	{
+        	"url":"https://www.geeksforgeeks.org/differences-between-django-vs-flask",
+		"name": "Django vs Flask"
+	}
+	]
+}

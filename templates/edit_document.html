@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edit Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to bottom,#ffffff,#99ccff);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+        }
+
+        .edit-container {
+            background: white;
+            padding: 20px;
+            margin-top: 20px;
+            width: 60%;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px #aaa;
+            text-align: left;
+        }
+
+        input[type="text"], textarea {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: block;
+        }
+
+        textarea {
+            min-height: 200px;
+            line-height: 1.5;
+            resize: vertical;
+        }
+
+        .save-btn, .cancel-btn {
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .save-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .cancel-btn {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Edit Document</h2>
+
+    <div class="edit-container">
+        <label><strong>Title:</strong></label>
+        <input type="text" id="docTitle" value="{{ document.title }}" />
+
+        <label><strong>Summary:</strong></label>
+        <textarea id="docSummary">{{ document.summary }}</textarea>
+
+        <label><strong>Content:</strong></label>
+        <textarea id="docContent">{{ document.content }}</textarea>
+	
+	<label><strong>Tags:</strong></label>
+        <input type="text" id="docTags" value="{{ document.tags }}" />
+	
+	<label><strong>Resource Links:</strong></label>
+	<textarea id="docResources">{{ document.resources | tojson }}</textarea>
+
+        <button class="save-btn" onclick="submitEdit('{{ document.name }}')">💾 Save Changes</button>
+        <button class="cancel-btn" onclick="window.history.back()">🚫 Cancel</button>
+    </div>
+
+    <script>
+	$(document).ready(function() {
+    		let content = $("#docContent").val();
+
+    		// Convert sentences into separate lines
+    		let formattedContent = content.replace(/([.?!])\s+/g, "$1\n");
+
+    		$("#docContent").val(formattedContent); // Update the textarea
+	});
+
+        function submitEdit(docId) {
+            let updatedData = {
+                title: $("#docTitle").val(),
+                summary: $("#docSummary").val(),
+                content: $("#docContent").val(),
+		tags: $("#docTags").val(),  // Ensure tags stay as a list
+        	resources: JSON.parse($("#docResources").val())  // Ensure resources stay as an array of objects
+    	};
+
+            $.ajax({
+                type: "POST",
+                url: `/submit_edit/${docId}`,
+                contentType: "application/json",
+                data: JSON.stringify(updatedData),
+                success: function(response) {
+                    alert(response.message);
+                    window.location.href = "/pending_documents";  // Redirect after submission
+                },
+                error: function() {
+                    alert("Error submitting edit.");
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

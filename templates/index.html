@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>AJAX-Based Search Engine</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            /*background-color: #fcfcfc;*/
+	    color: #333 /*keeps text readable*/
+        }
+	
+	#pageWrapper {
+		background: linear-gradient(to bottom,#ffffff,#99ccff);
+		min-height:100vh;
+		width:100%:
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+        #logo {
+            width: 150px;
+            margin-top: 20px;
+        }
+
+        #searchContainer {
+            margin-top: 20px;
+        }
+
+        #searchQuery {
+            width: 40%;
+            padding: 10px;
+            font-size: 18px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            transition: width 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+	    box-shadow: 2px 2px 2px rgba(0,0,0,0.2); /*subtle shadow*/
+        }
+
+        #searchQuery:focus {
+            width: 65%;
+	    box-shadow: 4px 4px 10px rgba(0,0,0,0.3); /*slightly stronger shadow*/
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #99ccff;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        #resultsList {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+	    background: transparent;
+        }
+
+        #resultsList li {
+            background: white;
+            padding: 10px;
+            margin: 5px auto;
+            width: 60%;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px #aaa;
+        }
+	.hamburger-menu {
+    		position: absolute;
+		top: 20px;
+		right: 20px;
+    		font-size: 24px;
+    		cursor: pointer;
+		background: rgba(255, 255, 255, 0.2); /* Light overlay for visibility */
+    		padding: 10px;
+    		border-radius: 5px;
+	}
+
+	.menu-container {
+    		display: none;
+    		position: absolute;
+    		top: 50px;
+    		right: 20px;
+    		background: white;
+    		padding: 10px;
+    		border-radius: 5px;
+	}
+
+.menu-container a {
+    display: block;
+    padding: 8px;
+    color: black;
+    text-decoration: none;
+}
+
+
+    </style>
+</head>
+<body>
+     <div id="pageWrapper">
+   	<div class="hamburger-menu">☰</div>
+
+   	<div id="menuDropdown" class="menu-container">
+        	<a href="/add_document">➕ Add Document</a>
+        	<a href="/pending_documents">Review Document</a>
+   	</div>
+   
+
+    	<img id="logo" src="{{ url_for('static', filename='logo_t.png') }}" alt="Search Logo">
+    	<div id="searchContainer">
+        	<input type="text" id="searchQuery" placeholder="Enter search query">
+        	<button onclick="performSearch()">Search</button>
+    	</div>
+	<h3 id="resultsHeader" style="display: none;">Results:</h3>
+    	<ul id="resultsList"></ul>
+    </div>
+
+    <script>
+        function performSearch() {
+            let query = $("#searchQuery").val();
+            $.ajax({
+                url: "/search",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ query: query }),
+
+                success: function(response) {
+                    $("#resultsList").empty(); //clear old results
+		    
+		    if (response.results.length > 0) {
+        		$("#resultsHeader").show(); // Reveal "Results" heading
+    			} else {
+        		$("#resultsHeader").hide(); // Hide heading if no results
+   		     }
+
+                    response.results.forEach(function(result) {
+			
+                        let listItem = $("<li>");
+			listItem.html(`		
+				<a href="/document/${result.title.toLowerCase().replace(/\s+/g, '-')}">${result.title}</a>
+				<br>
+				<strong>${result.summary}</strong>
+				`);
+			$("#resultsList").append(listItem);
+                    });
+                }
+	});
+	}
+
+        // Trigger search when Enter key is pressed
+        $("#searchQuery").on("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                performSearch();
+            }
+        });
+
+	$("#toggleFormButton").click(function() {
+		$("#searchBox, #searchButton").toggle(); // Hide/show search elements
+    		$("#addDocumentContainer").toggle(); // Show/hide form
+	});
+	
+	$(".hamburger-menu").click(function() {
+    		$("#menuDropdown").toggle();
+	});
+
+
+    </script>
+
+</body>
+</html>

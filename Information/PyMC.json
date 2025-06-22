@@ -1,0 +1,17 @@
+{
+	"title": "PyMC: A friendly python library for probabilistic programming",
+	"summary": "PyMC is programming library for Python that allows users to build Bayesian models with a simple Python API and fit them using Markov chain Monte Carlo (MCMC) methods.", 
+	"content": "PyMC strives to make Bayesian modeling as simple and painless as possible, allowing users to focus on their problem rather than the methods.Here is what sets it apart. It's modern and includes state-of-the-art inference algorithms, including MCMC (NUTS) and variational inference (ADVI).User friendly: Write your models using friendly Python syntax. Learn Bayesian modeling from the many example notebooks.Fast: Uses PyTensor as its computational backend to compile through C, Numba or JAX, run your models on the GPU, and benefit from complex graph-optimizations.Batteries included: Includes probability distributions, Gaussian processes, ABC, SMC and much more. It integrates nicely with ArviZ for visualizations and diagnostics, as well as Bambi for high-level mixed-effect models.Community focused: Ask questions on discourse, join MeetUp events, follow us on Twitter, and start contributing.", 
+	"tags": ["PyMC", "Probabilistic Programming", "Bayesian Inference"], 
+	"resources": [
+		{
+			"url": "https://www.pymc.io/welcome.html", 
+			"name": "PyMC Home page"
+		}, 
+		{
+			"url": "https://www.pymc.io/projects/examples/en/latest/gallery.html", 
+			"name": "PyMC Examples"
+		}
+		],
+	"last_updated": "2025-05-11"
+}

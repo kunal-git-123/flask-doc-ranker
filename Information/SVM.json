@@ -1,0 +1,18 @@
+{
+    "title": "Support Vector Machine: A Powerful Classification Algorithm",
+    "summary": "An algorithm that finds the optimal hyperplane to separate data points with maximum margin.",
+    "content": "Support Vector Machines (SVMs) aim to classify data by finding the hyperplane that best divides different classes...",
+    "tags": ["SVM", "Machine Learning", "Classification"],
+    "last_updated": "2025-05-03",
+    "author": "Kunal",
+    "resources": [
+        {
+            "name": "SVM Explained",
+            "url": "https://www.analyticsvidhya.com/blog/2017/09/understaing-support-vector-machine-example-code/"
+        },
+        {
+            "name": "Mathematical Basis of SVM",
+            "url": "https://cs229.stanford.edu/notes2022fall/cs229-notes3.pdf"
+        }
+    ]
+}

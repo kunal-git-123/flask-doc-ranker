@@ -1,0 +1,8 @@
+{
+    "title": "Boosting - Stronger Together",
+    "summary": "Boosting is a technique in Machine Learning that improves predictive accuracy by combining multiple weak learners.",
+    "content": "Weak learners are models that are only slightly better than random guessing. So, they alone can not be used. However, if we take a series of weak learners and train them sequentially, in such a way that each learner is trained on its predecessors error, each of them will progressively generate less error at overall level. So the final model can perform quite well eventually.",
+    "tags": "['Boosting', 'Decision Tree', 'Ensemble']",
+    "resources": "[{'url': 'https://en.wikipedia.org/wiki/Boosting_(machine_learning)', 'name': 'Boosting_Wikipedia'}]",
+    "last_updated": "Today"
+}

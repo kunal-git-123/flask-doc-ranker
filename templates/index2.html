@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>AJAX-Based Search Engine</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>Simple Information Retreival</h2>
+    <input type="text" id="searchQuery" placeholder="Enter search query">
+    <button onclick="performSearch()">Search</button>
+
+    <h3>Results:</h3>
+    <ul id="resultsList"></ul>
+
+    <script>
+        function performSearch() {
+            let query = $("#searchQuery").val();
+            $.ajax({
+                url: "/search",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ query: query }),
+                success: function(response) {
+                    $("#resultsList").empty();
+                    response.results.forEach(function(result) {
+                        $("#resultsList").append("<li>" + result + "</li>");
+                    });
+                }
+            });
+        }
+	
+	//Listen for Enter key press
+	$("#searchQuery").on("keypress",function(event) {
+		if (event.key === "Enter") {
+			event.preventDefault(); //Prevent for default behavipur submission
+			performSearch();
+		}
+	});
+    </script>
+</body>
+</html>

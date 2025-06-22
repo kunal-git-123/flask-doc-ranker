@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ffffff, #99ccff); /* Gradient background */
+            color: #333;
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .summary {
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        .content {
+            background: rgba(255, 255, 255, 0.1); /* Subtle contrast */
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .metadata {
+            font-size: 14px;
+            color: #333;
+            margin-top: 20px;
+        }
+        .resources {
+            margin-top: 20px;
+        }
+        .resources a {
+            color: #191970;
+            text-decoration: none;
+        }
+	
+        .edit-btn {
+		position: absolute;
+    		top: 10px;
+    		right: 15px;
+    		padding: 10px 15px;
+    		font-size: 16px;
+    		background-color: #ffcc00;
+    		color: black;
+    		border: none;
+    		border-radius: 5px;
+    		cursor: pointer;
+    	}
+
+    	.edit-btn:hover {
+        	background-color: #ff9900;
+    	}
+</style>
+
+
+    </style>
+</head>
+<body>
+    <h1>{{ document.title }}</h1>
+    
+    <p class="summary">{{ document.summary }}</p>
+    
+    <div class="content">
+        <p>{{ document.content }}</p>
+    </div>
+    
+    <p class="metadata">Last Updated: {{ document.last_updated }}</p>
+    
+    <div class="resources">
+        <h3>Resources:</h3>
+        <ul>
+            {% for resource in document.resources %}
+	    <li><a href="{{ resource.url }}" target="_blank">{{ resource.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <p style="text-align:center;">
+        <a href="/" >
+		<img src="{{ url_for('static', filename='logo_t.png') }}" alt="Back to Search" width="120">
+	</a>
+    </p>
+
+    <button class="edit-btn" onclick="editDocument('{{ document.name}}')">✏️ Edit</button>
+</body>
+
+<script>
+    function editDocument(docId) {
+	window.location.href = `/edit_document/${docId}`;  // Navigate after delay 	
+    }
+</script>
+
+</html>

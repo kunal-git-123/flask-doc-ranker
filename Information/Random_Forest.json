@@ -1,0 +1,18 @@
+{
+    "title": "Random Forest: Ensemble Learning for Classification & Regression",
+    "summary": "A machine learning algorithm that builds multiple decision trees to improve predictive accuracy.",
+    "content": "Random Forest operates by constructing multiple decision trees during training and averaging their predictions...",
+    "tags": ["Random Forest", "Machine Learning", "Decision Trees"],
+    "last_updated": "2025-05-03",
+    "author": "Kunal",
+    "resources": [
+        {
+		"url": "https://towardsdatascience.com/understanding-random-forest-58317754b79c",            
+		"name": "Understanding Random Forest"
+        },
+        {
+		"url": "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html",            	
+		"name": "Scikit-Learn Implementation"
+        }
+    ]
+}

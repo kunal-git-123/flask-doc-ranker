@@ -1,0 +1,14 @@
+{
+    "title": "Understanding Holt-Winters Smoothing",
+    "summary": "An explanation of Holt-Winters technique for time series forecasting.",
+    "content": "The Holt-Winters method is used to forecast trends with seasonal components by applying exponential smoothing...",
+    "tags": ["Holt-Winters","Time Series", "Forecasting"],
+    "last_updated": "2025-05-03",
+    "author": "Kunal",
+    "resources": [
+        {
+            "name": "Holt-Winters Method Overview",
+            "url": "https://otexts.com/fpp2/holt-winters.html"
+        }
+    ]
+}

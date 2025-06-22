@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Review Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to bottom,#ffffff,#99ccff);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+        }
+
+        .document-container {
+            background: white;
+            padding: 20px;
+            margin-top: 20px;
+            width: 60%;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px #aaa;
+            text-align: left;
+        }
+	
+	input[type="text"] {
+		width:80%;
+		height:30px;
+		font-size:18px;
+		padding:8px;
+		resize:horizontal;
+		border: 2px solid #333;
+		border-radius: 5px;
+		}
+
+	textarea {
+		    width: 80%;  /* Makes input wider */
+		    min-height: 200px;  /* Sets a reasonable default height */
+		    padding: 10px;
+		    font-size: 16px;
+		    line-height: 1.5;
+		    resize: vertical;  /* Allows expansion as needed */
+		    border: 2px solid #333;
+		    border-radius: 5px;
+		}
+	label {
+		    display: block;
+		    margin-top: 15px;
+		    font-weight: bold;
+		}
+
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .approve-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+
+        .reject-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Review Document</h2>
+
+    <div class="document-container">
+	    <label><strong>Title:</strong></label>
+	    <input type="text" id="docTitle" value="{{ document.title }}" />
+
+	    <label><strong>Summary:</strong></label>
+	    <textarea id="docSummary">{{ document.summary }}</textarea>
+
+	    <label><strong>Content:</strong></label>
+	    <textarea id="docContent">{{ document.content }}</textarea>
+
+	    <label><strong>Tags:</strong></label>
+	    <input type="text" id="docTags" value="{{ document.tags }}"/>
+	
+	    <label><strong>Resources:</strong></label>
+	    <textarea id="docResources">{{ document.resources }}</textarea>
+
+	    <button class="approve-btn" onclick="saveEdits('{{ document.name }}')">✅ Approve After Editing</button>
+	    <button class="reject-btn" onclick="rejectDocument('{{ document.name }}')">❌ Reject</button>
+   </div>
+
+
+    <script>
+        function saveEdits(docId) {
+    		let updatedData = {
+        		title: $("#docTitle").val(),
+        		summary: $("#docSummary").val(),
+        		content: $("#docContent").val(),
+			tags:$("#docTags").val(),
+			resources:$("#docResources").val()
+    	};
+
+	    $.ajax({
+		type: "POST",
+		url: `/approve_document/${docId}`,
+		contentType: "application/json",
+		data: JSON.stringify(updatedData),
+		success: function(response) {
+		    alert(response.message);
+		    window.location.href = "/pending_documents";  // Redirect after editing
+		},
+		error: function() {
+		    alert("Error saving edits.");
+		}
+	    });
+	}
+
+	function rejectDocument(docId) {
+	    console.log("Rejecting document:", docId);  // Debugging log
+
+	    $.post(`/reject_document/${docId}`, function(response) {
+		alert(response.message);
+		window.location.href = "/pending_documents";  // Redirect after rejection
+	    }).fail(function() {
+		alert("Error rejecting document.IDIOT",docId);
+	    });
+	}
+    </script>
+
+</body>
+</html>

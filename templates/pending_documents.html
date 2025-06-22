@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Pending Document Reviews</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to bottom,#ffffff,#99ccff);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            background: white;
+            padding: 10px;
+            margin: 5px auto;
+            width: 60%;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px #aaa;
+            cursor: pointer;
+        }
+
+        .no-backlog {
+            font-weight: bold;
+            color: gray;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Pending Document Reviews</h2>
+
+    {% if no_backlog %}
+        <p class="no-backlog">No pending reviews at the moment!</p>
+    {% else %}
+        <ul>
+    	{% for doc in documents %}
+        	{% if doc.status == "new" %}
+            		<li class="pending-document" data-url="/review_document/{{ doc.name }}">
+                		<strong>{{ doc.title }}</strong> (New)
+            		</li>
+        	{% elif doc.status == "edit" %}
+            		<li class="pending-document" data-url="/review_edit/{{ doc.name }}">
+                		<strong>{{ doc.title }}</strong> (Edited)
+            		</li>
+        	{% endif %}
+    {% endfor %}
+</ul>
+
+    {% endif %}
+
+    <!-- Add Home Button -->
+    <p style="text-align:center;">
+        <a href="/" >
+		<img src="{{ url_for('static', filename='logo_t.png') }}" alt="Back to Search" width="120">
+    </p>
+
+    <script>
+        $(document).ready(function() {
+            $(".pending-document").click(function() {
+                window.location.href = $(this).data("url");  // Redirects to document review page
+            });
+        });
+    </script>
+
+</body>
+</html>
